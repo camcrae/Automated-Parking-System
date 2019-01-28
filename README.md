@@ -1,6 +1,7 @@
 # Automated-Parking-System
 
-# cSC4350/6350 Software Engineering
+## cSC4350/6350 Software Engineering
+### Group 4
 
 **PROJECT TITLE**</br>
 Automated Parking System
