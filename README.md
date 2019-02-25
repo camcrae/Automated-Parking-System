@@ -8,6 +8,6 @@ Automated Parking System
 
 **TEAM MEMBER**</br>
 Angelica Marie Amis  
-Christopher T Fevrier  (coordinator)
 Paige Da Ae Park  
 Cameron Thomas McRae  
+Christopher T Fevrier  (coordinator)
