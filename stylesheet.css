@@ -1,0 +1,45 @@
+ body {
+	font-family: Times New Roman;
+    height:100%;
+    margin:0;
+    padding:0
+}
+
+
+/*background color*/
+ .menubar{
+	background-color: black;
+	overflow: hidden;
+ }
+ 
+/*style the links inside the menu bar*/
+ .menubar a{
+	float: left;
+	color: white;  /*font color when not selected*/
+	text-align: center;
+	padding: 14px 16px; /*menu bar size*/
+	text-decoration: none; /*to remove underline*/
+	font-size: 17px;
+ }
+
+ /*change the font color of links on hover*/
+ .menubar a:hover{
+	background-color: #ddd;
+	color: black;
+ }
+
+/*add a color to the current link*/
+ .menubar a.active{
+	background-color: gray;   /*green*/
+	color: white;   /*font color*/
+ }
+ 
+
+
+
+
+
+
+
+ 
+ 
