@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Payment </title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+				<script>
+ 
+/*This function makes sure all required information 
+has been given and is correct*/                  
+function required() {
+    var tempFormR = document.paymentForm;
+    var cardNumR = tempFormR.number.value;
+    var cardNameR = tempFormR.name.value;
+    var expMonthR = tempFormR.month.value;
+    var expYearR = tempFormR.year.value;
+    var cvvR = tempFormR.cvv.value;
+        
+    if(cardNumR == "") {
+        tempFormR.number.focus();
+        showAlert("* required fields");
+    } else if(cardNameR == "") {
+        tempFormR.name.focus();
+        showAlert("* required fields");
+    } else if(expMonthR == "") {
+        tempFormR.month.focus();
+        showAlert("* required fields");
+    } else if(expYearR == "") {
+        tempFormR.year.focus();
+        showAlert("* required fields");
+    } else if(cvvR == "") {
+        tempFormR.cvv.focus();
+        showAlert("* required fields");
+    } else {
+        if(isANum() == true) {
+            if(validCard() == true) {
+                localStorage.setItem("number", cardNameR);
+                localStorage.setItem("name", cardNumR);
+                localStorage.setItem("month", expMonthR);
+                localStorage.setItem("year", expYearR);
+                localStorage.setItem("cvv", cvvR);
+                
+                confirmation();
+            }
+        }
+    }
+
+    /*This doent do anything right now just here 
+    to connect to backend in the future*/
+    //sendToBackend();
+}
+
+/*This function was used for the text messages*/
+function showAlert(a) {
+    var alertTextSA = a;
+    document.getElementById("alertText").innerHTML = alertTextSA;
+}
+
+/*To make sure everything that should be a number is a number*/
+function isANum() {
+    var tempFormV = document.paymentForm;
+    var cardNumV = tempFormV.number.value;
+    var cardNameV = tempFormV.name.value;
+    var expMonthV = tempFormV.month.value;
+    var expYearV = tempFormV.year.value;
+    var cvvV = tempFormV.cvv.value;
+
+    if(isNaN(cardNumV) == true) {
+        showAlert("Must be a number");
+        tempFormV.number.focus();
+    } else if(isNaN(expMonthV) == true) {
+        showAlert("Must be a number");
+        tempFormV.month.focus();
+    } else if(isNaN(expYearV) == true) {
+        showAlert("Must be a number");
+        tempFormV.year.focus();
+    } else if(isNaN(cvvV) == true) {
+        showAlert("Must be a number");
+        tempFormV.cvv.focus();
+    } else {
+        return true;
+    }
+}
+ 
+/*Makes sure all the numbers are in a vaild format*/
+function validCard() {
+    var tempFormVC = document.paymentForm;
+    var cardNumVC = tempFormVC.number.value;
+    var cardNameVC = tempFormVC.name.value;
+    var expMonthVC = tempFormVC.month.value;
+    var expYearVC = tempFormVC.year.value;
+    var cvvVC = tempFormVC.cvv.value;
+    var alertTextVC;
+
+    if(cardNumVC.length != 16) {
+        showAlert("Invalid card number")
+        tempFormVC.number.focus();
+    } else if(expMonthVC < 1 || expMonthVC > 12) {
+        showAlert("Invalid month")
+        tempFormVC.month.focus();
+    } else if(expYearVC < 2019) {
+        showAlert("Invalid year")
+        tempFormVC.year.focus();
+    } else if(cvvVC.length != 3) {
+        showAlert("Invalid security code")
+        tempFormVC.cvv.focus();
+    } else {
+        return true;
+    }
+}
+
+/*Gets confirmation from the user to continue*/
+function confirmation() {
+
+    if(confirm("Payment Verified\nAre you sure you want to continue?") == true) {
+        showAlert("Payment Accepted");
+        /*Send final info to backend, commented out for now*/
+        //sendToBackend();
+        /*Local verify page location goes here*/
+        window.location.href = "barcode.html";
+    } else {
+        showAlert("Transaction Canceled");
+    }
+    
+}
+                    
+function cancel() {
+    if(confirm("Are you sure you want to cancel your check-in?") == true) {
+        showAlert("Check-in Canceled");
+        window.location.href = "checkin.html";
+    }
+}
+   
+/*A method where verified information can be sent to backend*/
+function sendToBackend() {
+    localStorage.getItem("number");
+    localStorage.getItem("name");
+    localStorage.getItem("month");
+    localStorage.getItem("year");
+    localStorage.getItem("cvv");
+}
+                    
+                    
+</script>
+</head>
+
+
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 30%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #db3b43;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+
+
+/* Float cancel and signup buttons and add an equal width */
+.continuebtn {
+  text-align:center;  
+  width: 15%;
+}
+
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}
+</style>
+
+
+<body>
+<center> <h2> SmartAPS </h2> 
+
+<link rel="stylesheet" href="stylesheet.css">
+
+<div class="menubar">
+ <a href="home.html">Home</a>
+ <a href="checkin.html">Check-in</a>
+ <a href="parkingstatus.html">Parking Status</a>
+</div>
+ 
+
+<form NAME=paymentForm action="/action_page.php" style="border:1px solid #ccc">
+  <div class="container">
+    <h1>Payment</h1>
+    <p id="alertText">Please input payment information.</p>
+    <p></p>
+    <hr>
+      
+      
+    <label for="cardnumber"><b>Card Number *</b></label><br>
+    <input type="text" placeholder="" name="number" ><br>
+
+    <label for="nameoncard"><b>Name On Card *</b></label><br>
+    <input type="text" placeholder="" name="name" ><br>
+
+    <label for="expdate"><b>Expiration Month *</b></label><br>
+    <input type="text" placeholder="" name="month"><br>
+	
+    <label for="expdate"><b>Expiration Year *</b></label><br>
+    <input type="text" placeholder="" name="year"><br>
+      
+	<label for="cvv"><b>Security Code (CVV) *</b></label><br>
+    <input type="text" placeholder="" name="cvv"><br>
+    
+ 
+    
+    <p>Click the button below to submit payment.</p>
+
+    <div class="clearfix">
+   
+      
+        <button type="button" class="continuebtn" onclick="required()">Continue</button>
+        <button type="button" class="continuebtn" onclick="cancel()">Cancel</button>
+     </div>
+   
+   
+
+  </div>
+</form>
+
+    
+</body>
+</html>
