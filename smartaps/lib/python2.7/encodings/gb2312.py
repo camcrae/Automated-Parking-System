@@ -1,0 +1,1 @@
+/Users/cam/anaconda2/lib/python2.7/encodings/gb2312.py

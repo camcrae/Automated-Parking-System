@@ -1,11 +1,15 @@
 <!DOCTYPE html>
+
+{% extends "base.html" %} {% import 'macros.html' as macros %}
+{% block content %}
+
 <html>
 <head>
 <title> Check-in </title>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
 				<script>
-				
+
 function myFunction() {
   var txt;
   if (confirm("The space is available!")) {
@@ -19,6 +23,8 @@ function myFunction() {
 
 </script>
 </head>
+
+{
 
 
 
@@ -66,7 +72,7 @@ button:hover {
 
 /* Float cancel and signup buttons and add an equal width */
 .continuebtn {
-  text-align:center;  
+  text-align:center;
   width: 30%;
 }
 
@@ -92,7 +98,7 @@ button:hover {
 
 
 <body>
-<center> <h2> SmartAPS </h2> 
+<center> <h2> SmartAPS </h2>
 
 <link rel="stylesheet" href="stylesheet.css">
 
@@ -105,7 +111,7 @@ button:hover {
 
 
 
-<form action="/action_page.php" style="border:1px solid #ccc">
+<form method="post" action="/checkin.html" style="border:1px solid #ccc">
   <div class="container">
     <h1>Check-in</h1>
     <p>Please fill in this form to check-in.</p>
@@ -119,20 +125,18 @@ button:hover {
 
     <label for="carinfo"><b>Car Year/Make/Model/Color</b></label><br>
     <input type="text" placeholder="ex. Year/Make/Model/Color" name="carinfo" required><br>
-	
+
 	<label for="carinfo"><b>Estimated Parking Duration</b></label><br>
     <input type="text" placeholder="ex. For 60 minutes, enter 60" name="duration" required><br>
-    
- 
-    
+
     <p>By continuing you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
 
     <div class="clearfix">
-   
+
       <button type="submit" class="continuebtn" onclick="myFunction()">Continue</button>
      </div>
-   
-   
+
+
 
   </div>
 </form>
@@ -140,3 +144,5 @@ button:hover {
 
 </body>
 </html>
+
+{%  end block %}
