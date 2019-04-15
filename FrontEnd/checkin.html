@@ -1,30 +1,15 @@
 <!DOCTYPE html>
-
-{% extends "base.html" %} {% import 'macros.html' as macros %}
-{% block content %}
-
 <html>
 <head>
 <title> Check-in </title>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
 				<script>
-<<<<<<< HEAD
-
-function myFunction() {
-  var txt;
-  if (confirm("The space is available!")) {
-    txt = "You pressed OK!";
-  } else {
-    txt = "You pressed Cancel!";
-  }
-  document.getElementById("demo").innerHTML = txt;
-=======
           
         
 /*confirms check-in and checks for aligability*/
 function con() {
-    required();
+    reqired();
     }
     
                     
@@ -41,7 +26,6 @@ function eligible() {
     } else {
         return false
     }
->>>>>>> 14dbc737b3c70f839b3961319c3a85b27735bcf9
 }
 
 /*stores the information locally from the form to be verified*/ 
@@ -65,8 +49,8 @@ function store() {
 }
                     
                     
-/*Makes sure all required information is filled out*/
-function required() {
+/*Makes sure all reqired information is filled out*/
+function reqired() {
     var myForm = document.form1;
     var make = myForm.make.value;
     var model = myForm.model.value;
@@ -74,14 +58,14 @@ function required() {
     var txt;
     
     if(make == "" || model == "") {
-        txt = "* required fields"
+        txt = "* reqired fields"
         if(make == "") {
             myForm.make.focus();
         } else {
             myForm.model.focus();
         }
     } else if(duration == "" || isNaN(duration) == true) {
-        txt = "* required fields" + "<br />" + "Must be a number"
+        txt = "* reqired fields" + "<br />" + "Must be a number"
         myForm.duration.focus();
     } else if(isNaN(duration) == false && duration < 30) {
         txt = "Minimum time of 30 minutes."
@@ -107,8 +91,6 @@ function required() {
 
 </script>
 </head>
-
-{
 
 
 
@@ -156,7 +138,7 @@ button:hover {
 
 /* Float cancel and signup buttons and add an equal width */
 .continuebtn {
-  text-align:center;
+  text-align:center;  
   width: 30%;
 }
 
@@ -183,7 +165,7 @@ button:hover {
 
 
 <body>
-<center> <h2> SmartAPS </h2>
+<center> <h2> SmartAPS </h2> 
 
 <link rel="stylesheet" href="stylesheet.css">
 
@@ -194,14 +176,7 @@ button:hover {
 </div>
  
 
-<<<<<<< HEAD
-
-
-
-<form method="post" action="/checkin.html" style="border:1px solid #ccc">
-=======
 <form id="formId" NAME=form1 action="/action_page.php" style="border:1px solid #ccc">
->>>>>>> 14dbc737b3c70f839b3961319c3a85b27735bcf9
   <div class="container">
     <h1>Check-in</h1>
     <p id="demo">Please fill in this form to check-in.</p>
@@ -214,19 +189,6 @@ button:hover {
     <label for="last"><b>Last Name</b></label><br>
     <input type="text" placeholder="Enter Last Name" name="lastname" ><br>
 
-<<<<<<< HEAD
-    <label for="carinfo"><b>Car Year/Make/Model/Color</b></label><br>
-    <input type="text" placeholder="ex. Year/Make/Model/Color" name="carinfo" required><br>
-
-	<label for="carinfo"><b>Estimated Parking Duration</b></label><br>
-    <input type="text" placeholder="ex. For 60 minutes, enter 60" name="duration" required><br>
-
-    <p>By continuing you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
-
-    <div class="clearfix">
-
-      <button type="submit" class="continuebtn" onclick="myFunction()">Continue</button>
-=======
     <label for="carinfo"><b>Car Make *</b></label><br>
     <input type="text" placeholder="ex. Make" name="make"><br>
 	
@@ -242,10 +204,9 @@ button:hover {
     <div class="clearfix">
    
       <button type="button" class="continuebtn" onclick="con()"; return false;>Continue</button>
->>>>>>> 14dbc737b3c70f839b3961319c3a85b27735bcf9
      </div>
-
-
+   
+   
 
   </div>
 </form>
@@ -253,5 +214,3 @@ button:hover {
     
 </body>
 </html>
-
-{%  end block %}

@@ -8,6 +8,7 @@ Step-by-step tutorial: https://medium.com/@rodkey/deploying-a-flask-application-
 '''
 
 from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 from application import db
 from application.models import Customer, Reservation
 from application.forms import EnterDBInfo, RetrieveDBInfo
@@ -28,11 +29,6 @@ def home():
 
 @application.route('/checkin', methods=['GET', 'POST'])
 def checkin():
-    form1 = EnterFirstName(request.form)
-    form2 = EnterLastName(request.form)
-    form3 = EnterVehicleInfo(request.form)
-    form4 = EnterEstimatedDuration(request.form)
-
     if request.method == 'POST':
         data_entered = Customer(fn=request.form['firstname'], ln=request.form['lastname'],
                                 vInfo=request.form['vInfo'], dur=request.form['duration'])
@@ -42,9 +38,9 @@ def checkin():
             db.session.close()
         except:
             db.session.rollback()
-        return redirect(url_for('parking'))
+        return render_template('parking.html')
 
-    return render_template('checkin.html', form1=form1, form2=form2, form3=form3, form4=form4)
+    return render_template('checkin.html',)
 
 
 @application.route('/parking', methods=['GET', 'POST'])

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Verify </title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+				<script>
+                    
+                    
+/*Displays the users information at the top of the screen for verification*/
+function getInfo() {
+    var firstVI = localStorage.getItem("first");
+    var lastVI = localStorage.getItem("last");
+    var makeVI = localStorage.getItem("make");
+    var modelVI = localStorage.getItem("model");
+    var durationVI = localStorage.getItem("duration");
+    
+    var userInfo = "First Name: " + firstVI + "<br />" + "Last Name: " + lastVI + "<br />" + "Make: " + makeVI + "<br />" + "Model: " + modelVI + "<br />" + "Duration: " + durationVI;
+    
+    localStorage.setItem("userInfoBU", userInfo);
+    document.getElementById("verifyText").innerHTML = userInfo;
+}
+
+/*Gets any new information from the form and updates the local storage*/
+function newInfo() {
+    var verifyFormGI = document.form1;
+    var firstGI = verifyFormGI.firstname.value;
+    var lastGI = verifyFormGI.lastname.value;
+    var makeGI = verifyFormGI.make.value;
+    var modelGI = verifyFormGI.model.value;
+    var durationGI = verifyFormGI.duration.value;
+    getInfo();
+    var userInfoGI = localStorage.getItem("userInfoBU");
+    
+    if(firstGI != "") {
+        localStorage.setItem("first", firstGI);
+    } 
+    if(lastGI != "") {
+        localStorage.setItem("last", lastGI);
+    } 
+    if(makeGI != "") {
+        localStorage.setItem("make", makeGI);
+    }
+    if(modelGI != "") {
+        localStorage.setItem("model", modelGI);
+    }
+    if(durationGI != "") {
+        if(isNaN(durationGI) == false && durationGI >= 30) {
+            localStorage.setItem("duration", durationGI)
+            
+        } else {
+            var error = "Must be a number." + "<br />" + "Must be 30 mins or more."
+            document.getElementById("alertText").innerHTML = error;
+            verifyFormGI.duration.focus();
+            
+        }
+    } 
+    getInfo();
+    
+}
+
+/*Checks to see if the car is eligible*/
+function eligible() {
+    /*Test var, 0 is true and 1 is false*/
+    var num = 0;
+    
+    
+    /*Feel free to change this if statment to connect backend*/
+    if(num == 0) {
+        return true 
+    } else {
+        return false
+    }
+}
+
+/*Gets confirmation from the user to continue*/
+function confirmation() {
+    var txt;
+    
+    if (eligible() == true) {
+        if(confirm("You are still eligible for parking.\nThis is the final verification\nAre you sure you want to continue?") == true) {
+            txt = "Great"
+            /*Send final info to backend, commented out for now*/
+            //sendToBackend();
+            /*Local verify page location goes here*/
+            window.location.href = "payment.html";
+        } else {
+            txt = "Verification Canceled"
+        }
+    } else {
+        txt = "You are not eligible for parking at this time." + "<br />" + "Please try again later."
+    }
+    document.getElementById("alertText").innerHTML = txt;
+    
+}
+   
+/*A method where verified information can be sent to backend*/
+function sendToBackend() {
+    /*This is the final verified information (some may be blank) to be put 
+    in what ever format is need to be sent to backend*/
+    var firstVI = localStorage.getItem("first");
+    var lastVI = localStorage.getItem("last");
+    var makeVI = localStorage.getItem("make");
+    var modelVI = localStorage.getItem("model");
+    var durationVI = localStorage.getItem("duration");
+}
+                    
+                    
+</script>
+</head>
+
+
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 30%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #db3b43;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+
+
+/* Float cancel and signup buttons and add an equal width */
+.continuebtn {
+  text-align:center;  
+  width: 15%;
+}
+
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}
+</style>
+
+
+<body onload="getInfo()">
+<center> <h2> SmartAPS </h2> 
+
+<link rel="stylesheet" href="stylesheet.css">
+
+<div class="menubar">
+ <a href="home.html">Home</a>
+ <a href="checkin.html">Check-in</a>
+ <a href="parkingstatus.html">Parking Status</a>
+</div>
+ 
+
+<form NAME=form1 action="/action_page.php" style="border:1px solid #ccc">
+  <div class="container">
+    <h1>Verify</h1>
+    <p id="alertText">Please verify your information.</p>
+    <p id="verifyText"></p>
+    <hr>
+      
+      
+    <label for="firstname"><b>First Name</b></label><br>
+    <input type="text" placeholder="" name="firstname" ><br>
+
+    <label for="lastname"><b>Last Name</b></label><br>
+    <input type="text" placeholder="" name="lastname" ><br>
+
+    <label for="carinfo"><b>Car Make </b></label><br>
+    <input type="text" placeholder="" name="make"><br>
+	
+    <label for="carinfo"><b>Car Model </b></label><br>
+    <input type="text" placeholder="" name="model"><br>
+      
+	<label for="carinfo"><b>Estimated Parking Duration </b></label><br>
+    <input type="text" placeholder="ex. For 60 minutes, enter 60" name="duration"><br>
+    
+ 
+    
+    <p>Click the button below to make changes.</p>
+
+    <div class="clearfix">
+   
+      <button type="button" class="continuebtn" onclick="newInfo()">Make Changes</button>
+        <button type="button" class="continuebtn" onclick="confirmation()">Continue</button>
+     </div>
+   
+   
+
+  </div>
+</form>
+
+    
+</body>
+</html>

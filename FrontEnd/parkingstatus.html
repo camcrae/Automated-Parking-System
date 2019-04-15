@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Parking Status </title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+				<script>
+                    
+   
+/*A method where verified information can be sent to backend*/
+function sendToBackend() {
+   /*This is the final verified information (some may be blank) to be put 
+    in what ever format is need to be sent to backend*/
+    var randCodeSTB = localStorage.getItem("randcode");
+    var phoneNumSTB = localStorage.getItem("phonenum")
+    
+}
+
+/*Creates a random parking code for the user
+This function starts when the page is loaded*/
+function randDeckGen() {
+	var deckFloor = Math.floor((Math.random() * 5) + 1);
+    var duration = localStorage.getItem("duration");
+    var deck;
+    var parkSpot;
+    
+    if(duration <= 60) {
+        deck = "A";
+    } else if(duration <= 120 && duration > 60) {
+        deck = "B";
+    } else if(duration <= 180 && duration > 120) {
+        deck = "C";
+    } else if(duration <= 240 && duration > 180) {
+        deck = "D";
+    }
+    
+    parkSpot = deck + deckFloor;
+    showAlert(parkSpot);
+    
+    
+    /*var chars = "01234567890123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+	var codeLength = 8;
+	var randCode = "";
+	for (var i = 0; i < codeLength; i++) {
+		var randNum = Math.floor(Math.random() * chars.length);
+		randCode += chars.substring(randNum, randNum + 1);
+	}
+    
+    randCode = randCode.toLocaleUpperCase();
+    localStorage.setItem("randcode", randCode);
+    
+    document.getElementById("code").innerHTML = randCode;*/
+}
+
+/*When the 'send to phone' button is pressed
+this function asks for and stores the phone Number
+In the future this function will also send the code to the user*/
+function sendToPhone() {
+    var randCodeSTP = localStorage.getItem("randcode");
+    
+    var phoneNum = prompt("Please enter your phone number", "");
+    
+    if(phoneNum.length != 10 || phoneNum == "" || isNaN(phoneNum) == true) {
+        showAlert("Invalid phone number");
+    } else {
+        showAlert("Code sent");
+        localStorage.setItem("phonenum", phoneNum);
+    }
+}
+
+/*Used to dosplay alert massages*/
+function showAlert(a) {
+    var alertTextSA = a;
+    document.getElementById("alertText").innerHTML = alertTextSA;
+}
+                    
+                    
+</script>
+</head>
+
+
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 30%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #db3b43;
+  color: white;
+  padding: 14px 20px;
+  margin: 4px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+
+
+/* Float cancel and signup buttons and add an equal width */
+.continuebtn {
+  text-align:center;  
+  width: 30%;
+}
+
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}
+</style>
+
+
+<body onload="randDeckGen()">
+<center> <h2> SmartAPS </h2> 
+
+<link rel="stylesheet" href="stylesheet.css">
+
+<div class="menubar">
+ <a href="home.html">Home</a>
+ <a href="checkin.html">Check-in</a>
+ <a class="active">Parking Status</a>
+</div>
+ 
+
+<form NAME=form1 action="/action_page.php" style="border:1px solid #ccc">
+  <div class="container">
+    <h1>Parking Status</h1>
+    <p id="alertText">This is your parking code.</p>
+    <p id="verifyText"></p>
+    <hr>
+      
+     <p id="code"></p>
+    
+      <p>Click the button below to send the code to your phone.</p>
+      <p>Or click to cancel the check-in.</p>
+
+    <div class="clearfix">
+   
+        <button type="button" class="continuebtn" onclick="sendToPhone()">Check-Out</button>
+        <!--<button type="button" class="continuebtn" onclick="window.location.href='checkin.html'">Cancel</button>-->
+     </div>
+   
+   
+
+  </div>
+</form>
+
+    
+</body>
+</html>
